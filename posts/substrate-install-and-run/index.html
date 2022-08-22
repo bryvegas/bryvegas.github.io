@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="搭建 Substrate 开发环境">
+<meta itemprop="description" content="Substrate 介绍 Substrate 是由德国 Parity 公司推出的一个区块链构建框架。它实现了区块链开发领域中所遇到的大部分通用功能，比如点对点网络连接，可配置的共识算法，常用加密算法，数据库存储，交易管理等。通过使用 Substrate，软件开发人员可以在短时间内建立一条属于自己的完整区块链，开发者只需要关注自己的业务逻辑，从底层复杂的技术中解放出来。 使用 Substrate 构建的区块链，有一个额外的好处，即可以轻易地连接到 Parity 的 Polkadot 公链网络，这一网络具有很多优势，比如跨链交易、共享安全等。 Substrate 是由 Rust 语言开发，而 Rust 最为一门高级静态编程语言，具有诸多优势，如内存安全、类型检查、支持编译为 WASM、函数式友好、社区资料完善等优点。通过借助 Rust 的优良特性，也使得 Substrate 的性能优良、可读性高。
+Substarte 和 Substrate-node-template 区别 Substrate 是将核心框架从 Polkadot 里边抽出来，让通用功能打包出来独立运行。substrate-node-template 则是将 Subtrate 的底层实现细节剥离出来，让开发者可以集中精力关注自己开发的应用程序及相关的配置。
+两者的关系可以简单理解为：substrate-node-template 是 substrate 的亲儿子，波卡 polkadot 的亲孙子。 从代码复杂程度看，Polkadot &gt; Substrate &gt; substrate-node-template。
+substrate-node-template 只留下了开发者开发需要用到的文件，其它的都通过依赖清单和调用一笔带过了。举个例子，Substrate 源代码项目里有很多实现好的功能，比如资产管理、智能合约等，如果用 substarte-node-template 编写自己的应用程序时要用到的话，只需轻松地在cargo.toml里引入依赖，在 runtime 运行配置清单里告诉下大家需要使用它，然后就可以调用这些功能了。项目结构精简了很多，目的也很明确：开发者只管知道怎么用就行了，其它不需要操心。就好比用电脑的人，不需要关心操作系统底层是怎么运行的，他只需要知道我做什么事情用什么软件就可以了。
+搭建开发环境 安装方式有两种：一种是使用官方提供的自动安装脚本，另一种是手动安装。这里推荐前者，一键将需要的软件和各种依赖都安装完成，等没必要花太多时间在安装环节。 官网安装文档点这里。
+官方脚本自动安装（推荐） $ curl https://getsubstrate.io -sSf | bash -s -- --fast 访问 https://getsubstrate.io 查看脚本详情。 脚本安装依赖包括： openssl（密码学库）、cmake（编译工具）、 llvm（编译器框架）、Rust等。"><meta itemprop="datePublished" content="2022-08-22T11:10:33+08:00" />
+<meta itemprop="dateModified" content="2022-08-22T11:10:33+08:00" />
+<meta itemprop="wordCount" content="200">
+<meta itemprop="keywords" content="Blockchain,Substrate," /><meta property="og:title" content="搭建 Substrate 开发环境" />
+<meta property="og:description" content="Substrate 介绍 Substrate 是由德国 Parity 公司推出的一个区块链构建框架。它实现了区块链开发领域中所遇到的大部分通用功能，比如点对点网络连接，可配置的共识算法，常用加密算法，数据库存储，交易管理等。通过使用 Substrate，软件开发人员可以在短时间内建立一条属于自己的完整区块链，开发者只需要关注自己的业务逻辑，从底层复杂的技术中解放出来。 使用 Substrate 构建的区块链，有一个额外的好处，即可以轻易地连接到 Parity 的 Polkadot 公链网络，这一网络具有很多优势，比如跨链交易、共享安全等。 Substrate 是由 Rust 语言开发，而 Rust 最为一门高级静态编程语言，具有诸多优势，如内存安全、类型检查、支持编译为 WASM、函数式友好、社区资料完善等优点。通过借助 Rust 的优良特性，也使得 Substrate 的性能优良、可读性高。
+Substarte 和 Substrate-node-template 区别 Substrate 是将核心框架从 Polkadot 里边抽出来，让通用功能打包出来独立运行。substrate-node-template 则是将 Subtrate 的底层实现细节剥离出来，让开发者可以集中精力关注自己开发的应用程序及相关的配置。
+两者的关系可以简单理解为：substrate-node-template 是 substrate 的亲儿子，波卡 polkadot 的亲孙子。 从代码复杂程度看，Polkadot &gt; Substrate &gt; substrate-node-template。
+substrate-node-template 只留下了开发者开发需要用到的文件，其它的都通过依赖清单和调用一笔带过了。举个例子，Substrate 源代码项目里有很多实现好的功能，比如资产管理、智能合约等，如果用 substarte-node-template 编写自己的应用程序时要用到的话，只需轻松地在cargo.toml里引入依赖，在 runtime 运行配置清单里告诉下大家需要使用它，然后就可以调用这些功能了。项目结构精简了很多，目的也很明确：开发者只管知道怎么用就行了，其它不需要操心。就好比用电脑的人，不需要关心操作系统底层是怎么运行的，他只需要知道我做什么事情用什么软件就可以了。
+搭建开发环境 安装方式有两种：一种是使用官方提供的自动安装脚本，另一种是手动安装。这里推荐前者，一键将需要的软件和各种依赖都安装完成，等没必要花太多时间在安装环节。 官网安装文档点这里。
+官方脚本自动安装（推荐） $ curl https://getsubstrate.io -sSf | bash -s -- --fast 访问 https://getsubstrate.io 查看脚本详情。 脚本安装依赖包括： openssl（密码学库）、cmake（编译工具）、 llvm（编译器框架）、Rust等。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://bryvegas.github.io/posts/substrate-install-and-run/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-08-22T11:10:33+08:00" />
+<meta property="article:modified_time" content="2022-08-22T11:10:33+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="搭建 Substrate 开发环境"/>
+<meta name="twitter:description" content="Substrate 介绍 Substrate 是由德国 Parity 公司推出的一个区块链构建框架。它实现了区块链开发领域中所遇到的大部分通用功能，比如点对点网络连接，可配置的共识算法，常用加密算法，数据库存储，交易管理等。通过使用 Substrate，软件开发人员可以在短时间内建立一条属于自己的完整区块链，开发者只需要关注自己的业务逻辑，从底层复杂的技术中解放出来。 使用 Substrate 构建的区块链，有一个额外的好处，即可以轻易地连接到 Parity 的 Polkadot 公链网络，这一网络具有很多优势，比如跨链交易、共享安全等。 Substrate 是由 Rust 语言开发，而 Rust 最为一门高级静态编程语言，具有诸多优势，如内存安全、类型检查、支持编译为 WASM、函数式友好、社区资料完善等优点。通过借助 Rust 的优良特性，也使得 Substrate 的性能优良、可读性高。
+Substarte 和 Substrate-node-template 区别 Substrate 是将核心框架从 Polkadot 里边抽出来，让通用功能打包出来独立运行。substrate-node-template 则是将 Subtrate 的底层实现细节剥离出来，让开发者可以集中精力关注自己开发的应用程序及相关的配置。
+两者的关系可以简单理解为：substrate-node-template 是 substrate 的亲儿子，波卡 polkadot 的亲孙子。 从代码复杂程度看，Polkadot &gt; Substrate &gt; substrate-node-template。
+substrate-node-template 只留下了开发者开发需要用到的文件，其它的都通过依赖清单和调用一笔带过了。举个例子，Substrate 源代码项目里有很多实现好的功能，比如资产管理、智能合约等，如果用 substarte-node-template 编写自己的应用程序时要用到的话，只需轻松地在cargo.toml里引入依赖，在 runtime 运行配置清单里告诉下大家需要使用它，然后就可以调用这些功能了。项目结构精简了很多，目的也很明确：开发者只管知道怎么用就行了，其它不需要操心。就好比用电脑的人，不需要关心操作系统底层是怎么运行的，他只需要知道我做什么事情用什么软件就可以了。
+搭建开发环境 安装方式有两种：一种是使用官方提供的自动安装脚本，另一种是手动安装。这里推荐前者，一键将需要的软件和各种依赖都安装完成，等没必要花太多时间在安装环节。 官网安装文档点这里。
+官方脚本自动安装（推荐） $ curl https://getsubstrate.io -sSf | bash -s -- --fast 访问 https://getsubstrate.io 查看脚本详情。 脚本安装依赖包括： openssl（密码学库）、cmake（编译工具）、 llvm（编译器框架）、Rust等。"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>搭建 Substrate 开发环境</title>
+	<link rel="stylesheet" href="http://bryvegas.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+	
+	<link rel="stylesheet" href="http://bryvegas.github.io/css/foo.css">
+	<link rel="stylesheet" href="http://bryvegas.github.io/css/bar.css">
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="http://bryvegas.github.io">Bry&#39;s Blog</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="http://bryvegas.github.io/posts/">文章</a>
+				<a href="http://bryvegas.github.io/about/">关于</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="toc-btn" class="hdr-btn desktop-only-ib" title="Table of Contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><span class="hdr-social hide-in-mobile"><a href="https://github.com/bryvegas" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a><a href="https://t.me/bryvegas" target="_blank" rel="noopener me" title="Telegram"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.968.193 1.798.919 2.286 1.61.516 3.275 1.009 4.654 1.472.509 1.793.997 3.592 1.48 5.388.16.36.506.494.864.498l-.002.018s.281.028.555-.038a2.1 2.1 0 0 0 .933-.517c.345-.324 1.28-1.244 1.811-1.764l3.999 2.952.032.018s.442.311 1.09.355c.324.022.75-.04 1.116-.308.37-.27.613-.702.728-1.196.342-1.492 2.61-12.285 2.997-14.072l-.01.042c.27-1.006.17-1.928-.455-2.474a1.654 1.654 0 0 0-1.034-.407z"/></svg></a><a href="mailto:bin.yang1110@gmail.com" target="_blank" rel="noopener me" title="Email"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="http://bryvegas.github.io/posts/">文章</a></li>
+			<li><a href="http://bryvegas.github.io/about/">关于</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Aug 22, 2022</span></div>
+				<h1>搭建 Substrate 开发环境</h1>
+			</header>
+			<div class="content">
+				<h2 id="substrate-介绍">Substrate 介绍<a href="#substrate-介绍" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>Substrate 是由德国 Parity 公司推出的一个区块链构建框架。它实现了区块链开发领域中所遇到的大部分通用功能，比如点对点网络连接，可配置的共识算法，常用加密算法，数据库存储，交易管理等。通过使用 Substrate，软件开发人员可以在短时间内建立一条属于自己的完整区块链，开发者只需要关注自己的业务逻辑，从底层复杂的技术中解放出来。<!-- raw HTML omitted -->
+使用 Substrate 构建的区块链，有一个额外的好处，即可以轻易地连接到 Parity 的 Polkadot 公链网络，这一网络具有很多优势，比如跨链交易、共享安全等。<!-- raw HTML omitted -->
+Substrate 是由 Rust 语言开发，而 Rust 最为一门高级静态编程语言，具有诸多优势，如内存安全、类型检查、支持编译为 WASM、函数式友好、社区资料完善等优点。通过借助 Rust 的优良特性，也使得 Substrate 的性能优良、可读性高。</p>
+<h2 id="substarte-和-substrate-node-template-区别">Substarte 和 Substrate-node-template 区别<a href="#substarte-和-substrate-node-template-区别" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p><strong>Substrate</strong> 是将核心框架从 Polkadot 里边抽出来，让通用功能打包出来独立运行。<strong>substrate-node-template</strong> 则是将 Subtrate 的底层实现细节剥离出来，让开发者可以集中精力关注自己开发的应用程序及相关的配置。</p>
+<p>两者的关系可以简单理解为：substrate-node-template 是 substrate 的亲儿子，波卡 polkadot 的亲孙子。<!-- raw HTML omitted -->
+从代码复杂程度看，Polkadot &gt; Substrate &gt; substrate-node-template。</p>
+<blockquote>
+<p>substrate-node-template 只留下了开发者开发需要用到的文件，其它的都通过依赖清单和调用一笔带过了。举个例子，Substrate 源代码项目里有很多实现好的功能，比如资产管理、智能合约等，如果用 substarte-node-template 编写自己的应用程序时要用到的话，只需轻松地在<code>cargo.toml</code>里引入依赖，在 runtime 运行配置清单里告诉下大家需要使用它，然后就可以调用这些功能了。项目结构精简了很多，目的也很明确：开发者只管知道怎么用就行了，其它不需要操心。就好比用电脑的人，不需要关心操作系统底层是怎么运行的，他只需要知道我做什么事情用什么软件就可以了。</p>
+</blockquote>
+<h2 id="搭建开发环境">搭建开发环境<a href="#搭建开发环境" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>安装方式有两种：一种是使用官方提供的自动安装脚本，另一种是手动安装。这里推荐前者，一键将需要的软件和各种依赖都安装完成，等没必要花太多时间在安装环节。<!-- raw HTML omitted -->
+官网安装文档<a href="https://docs.substrate.io/install/">点这里</a>。</p>
+<h3 id="官方脚本自动安装推荐">官方脚本自动安装（推荐）<a href="#官方脚本自动安装推荐" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ curl https://getsubstrate.io -sSf <span class="p">|</span> bash -s -- --fast
+</span></span></code></pre></div><blockquote>
+<p>访问 <a href="https://getsubstrate.io">https://getsubstrate.io</a> 查看脚本详情。<!-- raw HTML omitted -->
+脚本安装依赖包括： openssl（密码学库）、cmake（编译工具）、 llvm（编译器框架）、Rust等。</p>
+</blockquote>
+<p><strong>我自己在 Ubuntu22.04 环境下，提前使用阿里云软件源更新了系统，然后在较稳定的网络环境执行该自动安装脚本，最后顺利安装完毕。</strong>
+<figure><img src="https://p.qlogo.cn/qqmail_head/PiajxSqBRaEKibHiba6p3FjicqPP9LblrsZyWFYtHYY0Hbiciaoc8VuBpdyWcBpVHEC6WHHTN0Va84444/0"
+         alt="image"/>
+</figure>
+</p>
+<figure><img src="https://p.qlogo.cn/qqmail_head/PiajxSqBRaEKibHiba6p3FjicqPP9LblrsZyWFYtHYY0Hb8MCEMGWNUBkib9YJbaxqHgvvM0JdpHSbSg/0"
+         alt="image"/>
+</figure>
+
+<h3 id="手动安装">手动安装<a href="#手动安装" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>略，参考<a href="https://docs.substrate.io/install/">官网安装文档</a>。</p>
+<h2 id="编译-substrate">编译 substrate<a href="#编译-substrate" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<blockquote>
+<p>实际学习时，仅编译 substrate-node-template 即可，二者区别前面有说明。<!-- raw HTML omitted --></p>
+</blockquote>
+<p><strong>下载 Substrate 代码</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git clone https://github.com/paritytech/substrate.git
+</span></span></code></pre></div><p><strong>编译 Substrate</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ <span class="nb">cd</span> substrate
+</span></span><span class="line"><span class="cl"><span class="c1"># $ SKIP_WASM_BUILD=1 cargo build --release</span>
+</span></span><span class="line"><span class="cl">$ cargo build --release
+</span></span></code></pre></div><blockquote>
+<p>SKIP_WASM_BUILD=1 表示编译时跳过 wasm 编译构建版本，直接使用 native 的版本，从而节省编译时间。<!-- raw HTML omitted --></p>
+</blockquote>
+<p>出现如下提示，表示编译完成。（编译速度非常慢，建议闲暇时间进行）
+<figure><img src="https://p.qlogo.cn/qqmail_head/C6nnRGnPbvwlVslNHxDtemvOjTjEDAZ1pTfX6YEldQNGC2pf93j4axY1tAko9vEic7EPLLrzPlFI/0"
+         alt="image"/>
+</figure>
+</p>
+<p><strong>编译完成后，会生成 Substrate 可执行文件</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ <span class="nb">pwd</span>
+</span></span><span class="line"><span class="cl">/home/amesy/Documents/Code/Rust/substrate
+</span></span><span class="line"><span class="cl">$ ls -l target/release/substrate
+</span></span><span class="line"><span class="cl">-rwxrwxr-x <span class="m">2</span> amesy amesy <span class="m">88242168</span>  8月  <span class="m">4</span> 12:49 target/release/substrate
+</span></span></code></pre></div><h3 id="运行-substrate-节点网络">运行 substrate 节点网络<a href="#运行-substrate-节点网络" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<blockquote>
+<p>substrate用很多个命令（参数），可使用<code>./target/release/substrate --help</code>查看用法。</p>
+</blockquote>
+<p><strong>这里使用参数 &ndash;dev 以开发者模式运行节点网络</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ ./target/release/substrate --dev
+</span></span></code></pre></div><p>substrate 启动后，会输出如：当前的客户端版本，节点名，数据库目录，节点身份ID等等。
+<figure><img src="https://p.qlogo.cn/qqmail_head/C6nnRGnPbvwlVslNHxDtemvOjTjEDAZ1pTfX6YEldQMO2Lq4LpLybLGMHK1OE1CDW9e5ZJkj1l8/0"
+         alt="image"/>
+</figure>
+</p>
+<h2 id="编译-substrate-node-template">编译 substrate-node-template<a href="#编译-substrate-node-template" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<blockquote>
+<p>substrate-node-template 的编译方式跟上面编译 Substrate 时基本一致，具体参考官网文档，此处不再详述。</p>
+</blockquote>
+<p><strong>出现如下提示，表示编译完成。（编译速度非常慢，建议闲暇时间进行）</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Finished release <span class="o">[</span>optimized<span class="o">]</span> target<span class="o">(</span>s<span class="o">)</span> in 66m 26s
+</span></span></code></pre></div><p><strong>通过运行以下命令查看预定义Alice开发帐户的帐户信息</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./target/release/node-template key inspect //Alice
+</span></span></code></pre></div><figure><img src="https://p.qlogo.cn/qqmail_head/PiajxSqBRaEKibHiba6p3FjicqPP9LblrsZyWFYtHYY0Hb9rqIZFHVyGHib9aIjn61w5JKibnIj1sOHtI/0"
+         alt="image"/>
+</figure>
+
+<h2 id="运行节点">运行节点<a href="#运行节点" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p><strong>通过该命令以开发模式启动节点</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./target/release/node-template --dev
+</span></span></code></pre></div><h2 id="安装前端模板">安装前端模板<a href="#安装前端模板" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>略，参考<a href="https://docs.substrate.io/tutorials/get-started/build-local-blockchain/">官网安装文档</a>。</p>
+<blockquote>
+<p>执行某些前端工具命令时，需要通过 sudo 获取 root 权限来执行，否则可能会报错。</p>
+</blockquote>
+<h2 id="启动前端模板服务">启动前端模板服务<a href="#启动前端模板服务" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ sudo yarn start
+</span></span></code></pre></div><p>浏览器访问模板服务：<a href="http://localhost:8000">http://localhost:8000</a></p>
+<figure><img src="https://p.qlogo.cn/qqmail_head/PiajxSqBRaEKibHiba6p3FjicqPP9LblrsZyWFYtHYY0Hb8SsBE0yHjJhqML43kQCPPgr5s06oHuUZc/0"
+         alt="image"/>
+</figure>
+
+<p>可以看到 CURRENT BLOCK 跟服务端的出块数目基本保持同步。</p>
+<h2 id="总结">总结<a href="#总结" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>substrate-node-template 是将 Subtrate 的底层实现细节剥离出来，让开发者可以集中精力关注自己开发的应用程序及相关的配置。所以日常开发应该使用 substrate-node-template。</li>
+<li>官网文档提供了非常详细的安装步骤，安装时建议仔细阅读。</li>
+<li>安装过程只要确保网络畅通，加上足够的耐心，基本都能顺利安装完成。</li>
+<li>Substrate 节点服务和前端模板服务需要区分启动顺序，即 Substrate 节点服务先启动，前端模板服务后启动，否则可能会报错：<code>Error Connecting to Substrate</code>。</li>
+</ul>
+<p>(完)</p>
+
+			</div>
+
+			<hr class="post-end">
+			<footer class="post-info">
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-feather"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>Bry Vegas</p>
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="http://bryvegas.github.io/tags/blockchain">Blockchain</a></span><span class="tag"><a href="http://bryvegas.github.io/tags/substrate">Substrate</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>200 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2022-08-22 11:10 &#43;0800</p>
+			</footer>
+		</article>
+		<aside id="toc">
+			<div class="toc-title">Table of Contents</div>
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#substrate-介绍">Substrate 介绍</a></li>
+    <li><a href="#substarte-和-substrate-node-template-区别">Substarte 和 Substrate-node-template 区别</a></li>
+    <li><a href="#搭建开发环境">搭建开发环境</a>
+      <ul>
+        <li><a href="#官方脚本自动安装推荐">官方脚本自动安装（推荐）</a></li>
+        <li><a href="#手动安装">手动安装</a></li>
+      </ul>
+    </li>
+    <li><a href="#编译-substrate">编译 substrate</a>
+      <ul>
+        <li><a href="#运行-substrate-节点网络">运行 substrate 节点网络</a></li>
+      </ul>
+    </li>
+    <li><a href="#编译-substrate-node-template">编译 substrate-node-template</a></li>
+    <li><a href="#运行节点">运行节点</a></li>
+    <li><a href="#安装前端模板">安装前端模板</a></li>
+    <li><a href="#启动前端模板服务">启动前端模板服务</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+		</aside>
+		<div class="post-nav thin">
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2022 <a href="http://bryvegas.github.io">Bry Vegas</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="http://bryvegas.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="http://bryvegas.github.io/js/main.min.35de1ec5ccef7739e438e9119da86a7883c3a6419fb78d84d83e5697dd768b64.js" integrity="sha256-Nd4exczvdznkOOkRnahqeIPDpkGft42E2D5Wl912i2Q=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Substrate on Bry&#39;s Blog</title>
-    <link>https://bryvegas.github.io/tags/substrate/</link>
+    <link>http://bryvegas.github.io/tags/substrate/</link>
     <description>Recent content in Substrate on Bry&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 22 Aug 2022 11:10:33 +0800</lastBuildDate><atom:link href="https://bryvegas.github.io/tags/substrate/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 22 Aug 2022 11:10:33 +0800</lastBuildDate><atom:link href="http://bryvegas.github.io/tags/substrate/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>搭建 Substrate 开发环境</title>
-      <link>https://bryvegas.github.io/posts/substrate-install-and-run/</link>
+      <link>http://bryvegas.github.io/posts/substrate-install-and-run/</link>
       <pubDate>Mon, 22 Aug 2022 11:10:33 +0800</pubDate>
       
-      <guid>https://bryvegas.github.io/posts/substrate-install-and-run/</guid>
-      <description>Substrate 介绍 Substrate 是由德国 Parity 公司推出的一个区块链构建框架。它实现了区块链开发领域中所遇到的大部分通用功能，比如点对点网络连接，可配置的共识算法，常用加密算法，数据库存储，交易管理等。通过使用 Substrate，软件开发人员可以在短时间内建立一条属于自己的完整区块链，开发者只需要关注自己的业务逻辑，从底层复杂的技术中解放出来。 使用 Substrate 构建的区块链，有一个额外的好处，即可以轻易地连接到 Parity 的 Polkadot 公链网络，这一网络具有很多优势，比如跨链交易、共享安全等。 Substrate 是由 Rust 语言开发，而 Rust 最为一门高级静态编程语言，具有诸多优势，如内存安全、类型检查、支持编译为 WASM、函数式友好、社区资料完善等优点。通过借助 Rust 的优良特性，也使得 Substrate 的性能优良、可读性高。
+      <guid>http://bryvegas.github.io/posts/substrate-install-and-run/</guid>
+      <description>Substrate 介绍 Substrate 是由德国 Parity 公司推出的一个区块链构建框架。它实现了区块链开发领域中所遇到的大部分通用功能，比如点对点网络连接，可配置的共识算法，常用加密算法，数据库存储，交易管理等。通过使用 Substrate，软件开发人员可以在短时间内建立一条属于自己的完整区块链，开发者只需要关注自己的业务逻辑，从底层复杂的技术中解放出来。使用 Substrate 构建的区块链，有一个额外的好处，即可以轻易地连接到 Parity 的 Polkadot 公链网络，这一网络具有很多优势，比如跨链交易、共享安全等。Substrate 是由 Rust 语言开发，而 Rust 最为一门高级静态编程语言，具有诸多优势，如内存安全、类型检查、支持编译为 WASM、函数式友好、社区资料完善等优点。通过借助 Rust 的优良特性，也使得 Substrate 的性能优良、可读性高。
 Substarte 和 Substrate-node-template 区别 Substrate 是将核心框架从 Polkadot 里边抽出来，让通用功能打包出来独立运行。substrate-node-template 则是将 Subtrate 的底层实现细节剥离出来，让开发者可以集中精力关注自己开发的应用程序及相关的配置。
-两者的关系可以简单理解为：substrate-node-template 是 substrate 的亲儿子，波卡 polkadot 的亲孙子。 从代码复杂程度看，Polkadot &amp;gt; Substrate &amp;gt; substrate-node-template。
-substrate-node-template 只留下了开发者开发需要用到的文件，其它的都通过依赖清单和调用一笔带过了。举个例子，Substrate 源代码项目里有很多实现好的功能，比如资产管理、智能合约等，如果用 substarte-node-template 编写自己的应用程序时要用到的话，只需轻松地在cargo.toml里引入依赖，在 runtime 运行配置清单里告诉下大家需要使用它，然后就可以调用这些功能了。项目结构精简了很多，目的也很明确：开发者只管知道怎么用就行了，其它不需要操心。就好比用电脑的人，不需要关心操作系统底层是怎么运行的，他只需要知道我做什么事情用什么软件就可以了。
-搭建开发环境 安装方式有两种：一种是使用官方提供的自动安装脚本，另一种是手动安装。这里推荐前者，一键将需要的软件和各种依赖都安装完成，等没必要花太多时间在安装环节。 官网安装文档点这里。
-官方脚本自动安装（推荐） $ curl https://getsubstrate.io -sSf | bash -s -- --fast 访问 https://getsubstrate.io 查看脚本详情。 脚本安装依赖包括： openssl（密码学库）、cmake（编译工具）、 llvm（编译器框架）、Rust等。</description>
+两者的关系可以简单理解为：substrate-node-template 是 substrate 的亲儿子，波卡 polkadot 的亲孙子。从代码复杂程度看，Polkadot &amp;gt; Substrate &amp;gt; substrate-node-template。
+ substrate-node-template 只留下了开发者开发需要用到的文件，其它的都通过依赖清单和调用一笔带过了。举个例子，Substrate 源代码项目里有很多实现好的功能，比如资产管理、智能合约等，如果用 substarte-node-template 编写自己的应用程序时要用到的话，只需轻松地在cargo.toml里引入依赖，在 runtime 运行配置清单里告诉下大家需要使用它，然后就可以调用这些功能了。项目结构精简了很多，目的也很明确：开发者只管知道怎么用就行了，其它不需要操心。就好比用电脑的人，不需要关心操作系统底层是怎么运行的，他只需要知道我做什么事情用什么软件就可以了。
+ 搭建开发环境 安装方式有两种：一种是使用官方提供的自动安装脚本，另一种是手动安装。这里推荐前者，一键将需要的软件和各种依赖都安装完成，等没必要花太多时间在安装环节。官网安装文档点这里。
+官方脚本自动安装（推荐） $ curl https://getsubstrate.io -sSf | bash -s -- --fast  访问 https://getsubstrate.io 查看脚本详情。脚本安装依赖包括： openssl（密码学库）、cmake（编译工具）、 llvm（编译器框架）、Rust等。</description>
     </item>
     
   </channel>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="完全使用 Ubuntu 进行日常开发">
+<meta itemprop="description" content="背景 最近一个多月在深入学习 Substrate 框架，从上一篇文章初次接触 Substrate 时就发现编译非常慢，究其原因主要是rustc非常消耗 CPU 资源。Substrate 由 Rust 开发，rustc又是 Rust 的编译器，并且我习惯使用 CLion IDE 进行日常开发，在 CLion 本身已经很耗 CPU 资源的情况下，导致系统卡顿得死死的，编译时几乎做不了其他事情，简直忍不了。另外还有一点，我是在 Windows 系统上安装的 Vmware 虚拟机来进行开发，硬件资源无论怎么分配都受限，更是加剧了编译慢的问题。最后，干脆将物理机安装成 Ubuntu，基本上可以解决该问题。虽然懒得再折腾，但一想到接下来能顺畅编译，动力满满！
+过程 提前下载好了Ubuntu 22.04的镜像，安装过程非常顺利，直接用U盘安装，花了一个多小时安装完毕；接下来就是对新系统进行update和upgrade，这一步跟网络关系较大，花点时间都能执行完成。
+安装软件 根据日常需要，我总共安装了如下这些软件。
+命令行软件  ydict 命令行版的有道辞典 htop 进程资源查看器 tmux 终端多路复用器 &hellip;  其他软件  Vscode 轻量级IDE CLion 专业的IDE Chrome 浏览器 Flameshot 截图软件 WPS Linux版本的Office QQ Music 音乐软件 腾讯文档、腾讯会议 &hellip;  注意事项  命令行软件基本都可以通过命令安装:sudo apt install SOFTWARE_NAME。 部分非命令行软件可以通过 Ubuntu Software 安装  vscode 可以通过 Ubuntu Software 安装，但是通过这种方式安装会出现无法输入中文字符的情况，所以推荐下载 deb安装包手动安装。 输入法软件可以通过到系统的设置里面选择系统自带的输入法，也可以安装专业的搜狗输入法。 火狐浏览器在系统安装完毕后已自动安装。    总结 作为主力操作系统，使用了一段时间下来感觉系统运行稳定，丝毫不影响日常；软件覆盖率也很高，比如对腾讯会议软件的良好支持很赞，体验很棒。要说缺点的话，那就是不支持linux版微信，我尝试登陆网页版也被以安全为由拒绝，不过可以单独登陆网页版的微信文件传输助手，应付日常已足够。"><meta itemprop="datePublished" content="2022-08-29T11:15:08+08:00" />
+<meta itemprop="dateModified" content="2022-08-29T11:15:08+08:00" />
+<meta itemprop="wordCount" content="73">
+<meta itemprop="keywords" content="Linux,Ubuntu," /><meta property="og:title" content="完全使用 Ubuntu 进行日常开发" />
+<meta property="og:description" content="背景 最近一个多月在深入学习 Substrate 框架，从上一篇文章初次接触 Substrate 时就发现编译非常慢，究其原因主要是rustc非常消耗 CPU 资源。Substrate 由 Rust 开发，rustc又是 Rust 的编译器，并且我习惯使用 CLion IDE 进行日常开发，在 CLion 本身已经很耗 CPU 资源的情况下，导致系统卡顿得死死的，编译时几乎做不了其他事情，简直忍不了。另外还有一点，我是在 Windows 系统上安装的 Vmware 虚拟机来进行开发，硬件资源无论怎么分配都受限，更是加剧了编译慢的问题。最后，干脆将物理机安装成 Ubuntu，基本上可以解决该问题。虽然懒得再折腾，但一想到接下来能顺畅编译，动力满满！
+过程 提前下载好了Ubuntu 22.04的镜像，安装过程非常顺利，直接用U盘安装，花了一个多小时安装完毕；接下来就是对新系统进行update和upgrade，这一步跟网络关系较大，花点时间都能执行完成。
+安装软件 根据日常需要，我总共安装了如下这些软件。
+命令行软件  ydict 命令行版的有道辞典 htop 进程资源查看器 tmux 终端多路复用器 &hellip;  其他软件  Vscode 轻量级IDE CLion 专业的IDE Chrome 浏览器 Flameshot 截图软件 WPS Linux版本的Office QQ Music 音乐软件 腾讯文档、腾讯会议 &hellip;  注意事项  命令行软件基本都可以通过命令安装:sudo apt install SOFTWARE_NAME。 部分非命令行软件可以通过 Ubuntu Software 安装  vscode 可以通过 Ubuntu Software 安装，但是通过这种方式安装会出现无法输入中文字符的情况，所以推荐下载 deb安装包手动安装。 输入法软件可以通过到系统的设置里面选择系统自带的输入法，也可以安装专业的搜狗输入法。 火狐浏览器在系统安装完毕后已自动安装。    总结 作为主力操作系统，使用了一段时间下来感觉系统运行稳定，丝毫不影响日常；软件覆盖率也很高，比如对腾讯会议软件的良好支持很赞，体验很棒。要说缺点的话，那就是不支持linux版微信，我尝试登陆网页版也被以安全为由拒绝，不过可以单独登陆网页版的微信文件传输助手，应付日常已足够。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://bryvegas.github.io/posts/full-use-of-ubuntu-for-daily-development/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-08-29T11:15:08+08:00" />
+<meta property="article:modified_time" content="2022-08-29T11:15:08+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="完全使用 Ubuntu 进行日常开发"/>
+<meta name="twitter:description" content="背景 最近一个多月在深入学习 Substrate 框架，从上一篇文章初次接触 Substrate 时就发现编译非常慢，究其原因主要是rustc非常消耗 CPU 资源。Substrate 由 Rust 开发，rustc又是 Rust 的编译器，并且我习惯使用 CLion IDE 进行日常开发，在 CLion 本身已经很耗 CPU 资源的情况下，导致系统卡顿得死死的，编译时几乎做不了其他事情，简直忍不了。另外还有一点，我是在 Windows 系统上安装的 Vmware 虚拟机来进行开发，硬件资源无论怎么分配都受限，更是加剧了编译慢的问题。最后，干脆将物理机安装成 Ubuntu，基本上可以解决该问题。虽然懒得再折腾，但一想到接下来能顺畅编译，动力满满！
+过程 提前下载好了Ubuntu 22.04的镜像，安装过程非常顺利，直接用U盘安装，花了一个多小时安装完毕；接下来就是对新系统进行update和upgrade，这一步跟网络关系较大，花点时间都能执行完成。
+安装软件 根据日常需要，我总共安装了如下这些软件。
+命令行软件  ydict 命令行版的有道辞典 htop 进程资源查看器 tmux 终端多路复用器 &hellip;  其他软件  Vscode 轻量级IDE CLion 专业的IDE Chrome 浏览器 Flameshot 截图软件 WPS Linux版本的Office QQ Music 音乐软件 腾讯文档、腾讯会议 &hellip;  注意事项  命令行软件基本都可以通过命令安装:sudo apt install SOFTWARE_NAME。 部分非命令行软件可以通过 Ubuntu Software 安装  vscode 可以通过 Ubuntu Software 安装，但是通过这种方式安装会出现无法输入中文字符的情况，所以推荐下载 deb安装包手动安装。 输入法软件可以通过到系统的设置里面选择系统自带的输入法，也可以安装专业的搜狗输入法。 火狐浏览器在系统安装完毕后已自动安装。    总结 作为主力操作系统，使用了一段时间下来感觉系统运行稳定，丝毫不影响日常；软件覆盖率也很高，比如对腾讯会议软件的良好支持很赞，体验很棒。要说缺点的话，那就是不支持linux版微信，我尝试登陆网页版也被以安全为由拒绝，不过可以单独登陆网页版的微信文件传输助手，应付日常已足够。"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>完全使用 Ubuntu 进行日常开发</title>
+	<link rel="stylesheet" href="http://bryvegas.github.io/css/style.min.dd3c9aa65b19a70b99877c68f3c6994fa47602799d1a2021e0dc32d24a22bd5e.css" integrity="sha256-3TyaplsZpwuZh3xo88aZT6R2AnmdGiAh4Nwy0koivV4=" crossorigin="anonymous">
+	
+	<link rel="stylesheet" href="http://bryvegas.github.io/css/foo.css">
+	<link rel="stylesheet" href="http://bryvegas.github.io/css/bar.css">
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="http://bryvegas.github.io">Bry&#39;s Blog</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="http://bryvegas.github.io/posts/">文章</a>
+				<a href="http://bryvegas.github.io/about/">关于</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="toc-btn" class="hdr-btn desktop-only-ib" title="Table of Contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><span class="hdr-social hide-in-mobile"><a href="https://github.com/bryvegas" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a><a href="https://t.me/bryvegas" target="_blank" rel="noopener me" title="Telegram"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.968.193 1.798.919 2.286 1.61.516 3.275 1.009 4.654 1.472.509 1.793.997 3.592 1.48 5.388.16.36.506.494.864.498l-.002.018s.281.028.555-.038a2.1 2.1 0 0 0 .933-.517c.345-.324 1.28-1.244 1.811-1.764l3.999 2.952.032.018s.442.311 1.09.355c.324.022.75-.04 1.116-.308.37-.27.613-.702.728-1.196.342-1.492 2.61-12.285 2.997-14.072l-.01.042c.27-1.006.17-1.928-.455-2.474a1.654 1.654 0 0 0-1.034-.407z"/></svg></a><a href="mailto:bin.yang1110@gmail.com" target="_blank" rel="noopener me" title="Email"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="http://bryvegas.github.io/posts/">文章</a></li>
+			<li><a href="http://bryvegas.github.io/about/">关于</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Aug 29, 2022</span></div>
+				<h1>完全使用 Ubuntu 进行日常开发</h1>
+			</header>
+			<div class="content">
+				<h2 id="背景">背景<a href="#背景" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>最近一个多月在深入学习 Substrate 框架，从上一篇文章初次接触 Substrate 时就发现编译非常慢，究其原因主要是<code>rustc</code>非常消耗 CPU 资源。Substrate 由 Rust 开发，<code>rustc</code>又是 Rust 的编译器，并且我习惯使用 CLion IDE 进行日常开发，在 CLion 本身已经很耗 CPU 资源的情况下，导致系统卡顿得死死的，编译时几乎做不了其他事情，简直忍不了。另外还有一点，我是在 Windows 系统上安装的 Vmware 虚拟机来进行开发，硬件资源无论怎么分配都受限，更是加剧了编译慢的问题。最后，干脆将物理机安装成 Ubuntu，基本上可以解决该问题。虽然懒得再折腾，但一想到接下来能顺畅编译，动力满满！</p>
+<h2 id="过程">过程<a href="#过程" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>提前下载好了<code>Ubuntu 22.04</code>的镜像，安装过程非常顺利，直接用U盘安装，花了一个多小时安装完毕；接下来就是对新系统进行<code>update</code>和<code>upgrade</code>，这一步跟网络关系较大，花点时间都能执行完成。</p>
+<h2 id="安装软件">安装软件<a href="#安装软件" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>根据日常需要，我总共安装了如下这些软件。</p>
+<h3 id="命令行软件">命令行软件<a href="#命令行软件" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li><a href="https://github.com/TimothyYe/ydict/blob/master/README_CN.md">ydict</a> 命令行版的有道辞典</li>
+<li><a href="https://htop.dev/">htop</a> 进程资源查看器</li>
+<li><a href="https://github.com/tmux/tmux">tmux</a> 终端多路复用器</li>
+<li>&hellip;</li>
+</ul>
+<h3 id="其他软件">其他软件<a href="#其他软件" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li><a href="https://az764295.vo.msecnd.net/stable/e4503b30fc78200f846c62cf8091b76ff5547662/code_1.70.2-1660629410_amd64.deb">Vscode</a> 轻量级IDE</li>
+<li><a href="">CLion</a> 专业的IDE</li>
+<li><a href="">Chrome</a> 浏览器</li>
+<li><a href="https://github.com/flameshot-org/flameshot#prebuilt-packages">Flameshot</a> 截图软件</li>
+<li><a href="https://www.wps.com/office/linux/">WPS</a> Linux版本的Office</li>
+<li><a href="https://y.qq.com/download/download.html">QQ Music</a> 音乐软件</li>
+<li><a href="">腾讯文档、腾讯会议</a></li>
+<li>&hellip;</li>
+</ul>
+<h3 id="注意事项">注意事项<a href="#注意事项" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li>命令行软件基本都可以通过命令安装:<code>sudo apt install SOFTWARE_NAME</code>。</li>
+<li>部分非命令行软件可以通过 Ubuntu Software 安装
+<ul>
+<li>vscode 可以通过 Ubuntu Software 安装，但是通过这种方式安装会出现无法输入中文字符的情况，所以推荐下载 <a href="https://az764295.vo.msecnd.net/stable/e4503b30fc78200f846c62cf8091b76ff5547662/code_1.70.2-1660629410_amd64.deb">deb</a>安装包手动安装。</li>
+<li>输入法软件可以通过到系统的设置里面选择系统自带的输入法，也可以安装专业的<a href="https://shurufa.sogou.com/linux">搜狗输入法</a>。</li>
+<li>火狐浏览器在系统安装完毕后已自动安装。</li>
+</ul>
+</li>
+</ul>
+<h2 id="总结">总结<a href="#总结" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>作为主力操作系统，使用了一段时间下来感觉系统运行稳定，丝毫不影响日常；软件覆盖率也很高，比如对腾讯会议软件的良好支持很赞，体验很棒。要说缺点的话，那就是不支持linux版微信，我尝试登陆网页版也被以安全为由拒绝，不过可以单独登陆网页版的微信文件传输助手，应付日常已足够。</p>
+
+			</div>
+
+			<hr class="post-end">
+			<footer class="post-info">
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-feather"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>Bry Vegas</p>
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="http://bryvegas.github.io/tags/linux">Linux</a></span><span class="tag"><a href="http://bryvegas.github.io/tags/ubuntu">Ubuntu</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>73 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2022-08-29 11:15 &#43;0800</p>
+			</footer>
+		</article>
+		<aside id="toc">
+			<div class="toc-title">Table of Contents</div>
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#过程">过程</a></li>
+    <li><a href="#安装软件">安装软件</a>
+      <ul>
+        <li><a href="#命令行软件">命令行软件</a></li>
+        <li><a href="#其他软件">其他软件</a></li>
+        <li><a href="#注意事项">注意事项</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+		</aside>
+		<div class="post-nav thin">
+			<a class="prev-post" href="http://bryvegas.github.io/posts/substrate-install-and-run/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>搭建 Substrate 开发环境</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2022 <a href="http://bryvegas.github.io">Bry Vegas</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="http://bryvegas.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="http://bryvegas.github.io/js/main.min.4eaa15feccc672488716f0338ac605e08c7553ce0ce175e13fa00a873636bf98.js" integrity="sha256-TqoV/szGckiHFvAzisYF4Ix1U84M4XXhP6AKhzY2v5g=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on Bry&#39;s Blog</title>
+    <link>http://bryvegas.github.io/tags/linux/</link>
+    <description>Recent content in Linux on Bry&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 29 Aug 2022 11:15:08 +0800</lastBuildDate><atom:link href="http://bryvegas.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>完全使用 Ubuntu 进行日常开发</title>
+      <link>http://bryvegas.github.io/posts/full-use-of-ubuntu-for-daily-development/</link>
+      <pubDate>Mon, 29 Aug 2022 11:15:08 +0800</pubDate>
+      
+      <guid>http://bryvegas.github.io/posts/full-use-of-ubuntu-for-daily-development/</guid>
+      <description>背景 最近一个多月在深入学习 Substrate 框架，从上一篇文章初次接触 Substrate 时就发现编译非常慢，究其原因主要是rustc非常消耗 CPU 资源。Substrate 由 Rust 开发，rustc又是 Rust 的编译器，并且我习惯使用 CLion IDE 进行日常开发，在 CLion 本身已经很耗 CPU 资源的情况下，导致系统卡顿得死死的，编译时几乎做不了其他事情，简直忍不了。另外还有一点，我是在 Windows 系统上安装的 Vmware 虚拟机来进行开发，硬件资源无论怎么分配都受限，更是加剧了编译慢的问题。最后，干脆将物理机安装成 Ubuntu，基本上可以解决该问题。虽然懒得再折腾，但一想到接下来能顺畅编译，动力满满！
+过程 提前下载好了Ubuntu 22.04的镜像，安装过程非常顺利，直接用U盘安装，花了一个多小时安装完毕；接下来就是对新系统进行update和upgrade，这一步跟网络关系较大，花点时间都能执行完成。
+安装软件 根据日常需要，我总共安装了如下这些软件。
+命令行软件  ydict 命令行版的有道辞典 htop 进程资源查看器 tmux 终端多路复用器 &amp;hellip;  其他软件  Vscode 轻量级IDE CLion 专业的IDE Chrome 浏览器 Flameshot 截图软件 WPS Linux版本的Office QQ Music 音乐软件 腾讯文档、腾讯会议 &amp;hellip;  注意事项  命令行软件基本都可以通过命令安装:sudo apt install SOFTWARE_NAME。 部分非命令行软件可以通过 Ubuntu Software 安装  vscode 可以通过 Ubuntu Software 安装，但是通过这种方式安装会出现无法输入中文字符的情况，所以推荐下载 deb安装包手动安装。 输入法软件可以通过到系统的设置里面选择系统自带的输入法，也可以安装专业的搜狗输入法。 火狐浏览器在系统安装完毕后已自动安装。    总结 作为主力操作系统，使用了一段时间下来感觉系统运行稳定，丝毫不影响日常；软件覆盖率也很高，比如对腾讯会议软件的良好支持很赞，体验很棒。要说缺点的话，那就是不支持linux版微信，我尝试登陆网页版也被以安全为由拒绝，不过可以单独登陆网页版的微信文件传输助手，应付日常已足够。</description>
+    </item>
+    
+  </channel>
+</rss>
